@@ -1,0 +1,13 @@
+global:
+  slack_api_url: https://hooks.slack.com/services/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  # Slack webhook URL
+
+route:
+  group_by: ['alertname', 'severity']
+  receiver: 'slack-notifications'
+
+receivers:
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#alerts'
+    send_resolved: true
+    text: "{{ range .Alerts }}\n*Alert:* {{ .Annotations.summary }}\n*Description:* {{ .Annotations.description }}\n*Details:* {{ .Labels.severity }}\n{{ end }}"

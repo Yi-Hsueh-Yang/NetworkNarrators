@@ -1,0 +1,22 @@
+groups:
+- name: service-correctness
+  rules:
+  - alert: HighErrorRate
+    expr: sum(rate(request_count{http_status!="200"}[5m])) / sum(rate(request_count[5m])) > 0.05
+    for: 1m
+    labels:
+      severity: page
+    annotations:
+      summary: High non-200 error rate detected in Recommendation Service
+      description: More than 5% of requests are not resulting in an HTTP 200 status.
+ 
+- name: service_availability
+  rules:
+  - alert: MyServiceDown
+    expr: up{job="recommendation_service"} == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "My Service is down"
+      description: "The service on port 8082 is not responding to scrapes."
