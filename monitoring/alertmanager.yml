@@ -1,5 +1,5 @@
 global:
-  slack_api_url: https://hooks.slack.com/services/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  # Slack webhook URL
+  slack_api_url: 'YOUR_SlackWebhookURL'  # Slack webhook URL
 
 route:
   group_by: ['alertname', 'severity']
